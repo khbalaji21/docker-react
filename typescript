@@ -1,0 +1,752 @@
+Script started on 2020-06-03 00:09:17+0530
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ ls
+0528_1230_Screen.op  0528_1230_Screen.op~  0528-1231.his  [0m[01;34mbuild[0m  Dockerfile.dev  [01;34mhelp[0m  [01;34mnode_modules[0m  package.json  [01;34mpublic[0m  README.md  [01;34msrc[0m  typescript
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ rm 0528*
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ ls
+[0m[01;34mbuild[0m  Dockerfile.dev  [01;34mhelp[0m  [01;34mnode_modules[0m  package.json  [01;34mpublic[0m  README.md  [01;34msrc[0m  typescript
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ cat Dockerfile.dev 
+FROM node:alpine
+
+WORKDIR '/app'
+
+COPY package.json .
+RUN npm install
+
+COPY . .
+
+CMD ["npm", "run", "start"]
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker images ls[K[K[K[K ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+<none>              <none>              0ac582f1797b        5 days ago          333MB
+<none>              <none>              967553bc25eb        5 days ago          5.61MB
+node                alpine              72eea7c426fc        12 days ago         117MB
+redis               latest              987b78fc9e38        2 weeks ago         104MB
+busybox             latest              78096d0a5478        2 weeks ago         1.22MB
+my-custom-node      latest              e0e6af798a01        3 weeks ago         940MB
+my-custom-nginx     latest              1bde176db0c5        3 weeks ago         129MB
+mysql               latest              a7a67c95e831        5 weeks ago         541MB
+jenkins/jenkins     latest              127b486c7026        5 weeks ago         648MB
+mongo               latest              3f3daf863757        5 weeks ago         388MB
+alpine              latest              f70734b6a266        5 weeks ago         5.61MB
+php                 apache              411f1fb43be0        5 weeks ago         414MB
+nginx               latest              602e111c06b6        5 weeks ago         127MB
+hello-world         latest              bf756fb1ae65        5 months ago        13.3kB
+node                10.15.1             8fc2110c6978        16 months ago       897MB
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker image rm 0ac5
+Error response from daemon: conflict: unable to delete 0ac582f1797b (must be forced) - image is being used by stopped container 00a612769ee1
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                    PORTS               NAMES
+00a612769ee1        0ac582f1797b        "docker-entrypoint.s…"   5 days ago          Exited (0) 5 days ago                         competent_zhukovsky
+edb1f12c7c40        34a2dcf0bcd4        "/bin/sh -c 'apt-get…"   5 days ago          Exited (127) 5 days ago                       recursing_dhawan
+8d38fc7d71a3        967553bc25eb        "/bin/sh -c 'npm ins…"   5 days ago          Exited (127) 5 days ago                       hopeful_golick
+9f5cb1c3a420        php:apache          "docker-php-entrypoi…"   4 weeks ago         Exited (0) 2 weeks ago                        myPHP
+55c7b4f716bc        mysql               "docker-entrypoint.s…"   4 weeks ago         Exited (0) 2 weeks ago                        myMySQL
+311787be85a5        mongo               "docker-entrypoint.s…"   4 weeks ago         Exited (0) 4 weeks ago                        myMongocv
+c026c992c631        mongo               "docker-entrypoint.s…"   4 weeks ago         Exited (0) 4 weeks ago                        myMongodet
+8bddb2b1947c        nginx               "nginx -g 'daemon of…"   4 weeks ago         Exited (0) 8 days ago                         myNginxv
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container rm competent_zhukovsky recursing_dhawan hopeful_golick 
+competent_zhukovsky
+recursing_dhawan
+hopeful_golick
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker image rm 0ac5 9675
+Deleted: sha256:0ac582f1797b966164f7f42b57685a57f2e7cc3722ce547ceaaef4fe46e3bc41
+Deleted: sha256:3ae6a64ebe4aa66455835eb48e477d023d0f67a3d5b3ad759fd60baa4e5ded4e
+Deleted: sha256:67dcd1dab1b338dae488284b4bd454496ba41c4aebe74eba0bcb6de49bd6eee6
+Deleted: sha256:1336ec467a5bb5634ec61ac2dc937e03da7a7985a3ce1bd1a436a664bb12de50
+Deleted: sha256:796d9f7b6d58fd99ea52eca5f5ca37572a16df9a20bda082ed1d5d8f3ed3fb2d
+Deleted: sha256:953cce69574989b9afca0c6a6e186bd006cd2c4932d57f7cad43251f20b2e72a
+Deleted: sha256:622abd014f9073aa6d3c86765ae8cb22423ad70c839be401050290dca27adfd6
+Deleted: sha256:f67c5f0529ce1babdd9c96a95af42429be8faa8f3d35aec6fed4de0da4943058
+Deleted: sha256:e29d28da3c3e7899577ff71177af35b7cdf2d3af320bd23ea7f750f6a5f9da13
+Deleted: sha256:967553bc25ebd1e8808578d9225d52b7575035c162e6d559da68c2a87a25aba7
+Deleted: sha256:64336977f7cd222e542ad690ca9c286234d5c53e90ecbc62e4a6cf8a06e922e9
+Deleted: sha256:34a2dcf0bcd4297b5686fa72886310ad25ac676cfcbcfbef28098584d9a7226d
+Deleted: sha256:27f8e8f332b82b5a2a384f93ff5e6f8dfe91d96eeab9cadb55d7dd9b48237575
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+node                alpine              72eea7c426fc        12 days ago         117MB
+redis               latest              987b78fc9e38        2 weeks ago         104MB
+busybox             latest              78096d0a5478        2 weeks ago         1.22MB
+my-custom-node      latest              e0e6af798a01        3 weeks ago         940MB
+my-custom-nginx     latest              1bde176db0c5        3 weeks ago         129MB
+mysql               latest              a7a67c95e831        5 weeks ago         541MB
+jenkins/jenkins     latest              127b486c7026        5 weeks ago         648MB
+mongo               latest              3f3daf863757        5 weeks ago         388MB
+alpine              latest              f70734b6a266        5 weeks ago         5.61MB
+php                 apache              411f1fb43be0        5 weeks ago         414MB
+nginx               latest              602e111c06b6        5 weeks ago         127MB
+hello-world         latest              bf756fb1ae65        5 months ago        13.3kB
+node                10.15.1             8fc2110c6978        16 months ago       897MB
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ clear
+[3J[H[2J]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker con[K[K[Kbuild -f Dockerfile.dev 
+"docker build" requires exactly 1 argument.
+See 'docker build --help'.
+
+Usage:  docker build [OPTIONS] PATH | URL | -
+
+Build an image from a Dockerfile
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker build -f Dockerfile.dev .
+Sending build context to Docker daemon  557.1kBSending build context to Docker daemon  1.114MBSending build context to Docker daemon  2.228MBSending build context to Docker daemon  2.785MBSending build context to Docker daemon  3.342MBSending build context to Docker daemon  3.899MBSending build context to Docker daemon  4.456MBSending build context to Docker daemon  5.014MBSending build context to Docker daemon  6.128MBSending build context to Docker daemon  6.685MBSending build context to Docker daemon  7.242MBSending build context to Docker daemon  7.799MBSending build context to Docker daemon  8.356MBSending build context to Docker daemon  8.913MBSending build context to Docker daemon   9.47MBSending build context to Docker daemon  10.03MBSending build context to Docker daemon  10.58MBSending build context to Docker daemon  11.14MBSending build context to Docker daemon   11.7MBSending build context to Docker daemon  12.26MBSending build context to Docker daemon  12.81MBSending build context to Docker daemon  13.37MBSending build context to Docker daemon  16.15MBSending build context to Docker daemon  17.27MBSending build context to Docker daemon  17.83MBSending build context to Docker daemon  18.38MBSending build context to Docker daemon   19.5MBSending build context to Docker daemon  24.51MBSending build context to Docker daemon  25.07MBSending build context to Docker daemon  25.62MBSending build context to Docker daemon  26.18MBSending build context to Docker daemon   27.3MBSending build context to Docker daemon  27.85MBSending build context to Docker daemon  28.41MBSending build context to Docker daemon  30.08MBSending build context to Docker daemon  30.64MBSending build context to Docker daemon   31.2MBSending build context to Docker daemon  31.75MBSending build context to Docker daemon  32.31MBSending build context to Docker daemon  33.42MBSending build context to Docker daemon  33.98MBSending build context to Docker daemon  34.54MBSending build context to Docker daemon  35.09MBSending build context to Docker daemon  35.65MBSending build context to Docker daemon  36.21MBSending build context to Docker daemon  36.77MBSending build context to Docker daemon  37.32MBSending build context to Docker daemon  37.88MBSending build context to Docker daemon  38.44MBSending build context to Docker daemon  39.55MBSending build context to Docker daemon  40.67MBSending build context to Docker daemon  41.22MBSending build context to Docker daemon  41.78MBSending build context to Docker daemon  42.34MBSending build context to Docker daemon  42.89MBSending build context to Docker daemon  43.45MBSending build context to Docker daemon  44.01MBSending build context to Docker daemon  44.56MBSending build context to Docker daemon  45.12MBSending build context to Docker daemon  45.68MBSending build context to Docker daemon  46.24MBSending build context to Docker daemon  46.79MBSending build context to Docker daemon  47.35MBSending build context to Docker daemon  47.91MBSending build context to Docker daemon  48.46MBSending build context to Docker daemon  49.02MBSending build context to Docker daemon  50.14MBSending build context to Docker daemon  50.69MBSending build context to Docker daemon  51.25MBSending build context to Docker daemon  52.36MBSending build context to Docker daemon  52.92MBSending build context to Docker daemon  53.48MBSending build context to Docker daemon  54.03MBSending build context to Docker daemon  54.59MBSending build context to Docker daemon  55.15MBSending build context to Docker daemon  55.71MBSending build context to Docker daemon  56.26MBSending build context to Docker daemon  56.82MBSending build context to Docker daemon  57.38MBSending build context to Docker daemon  57.93MBSending build context to Docker daemon  58.49MBSending build context to Docker daemon  59.05MBSending build context to Docker daemon   59.6MBSending build context to Docker daemon  60.16MBSending build context to Docker daemon  60.72MBSending build context to Docker daemon  61.28MBSending build context to Docker daemon  61.83MBSending build context to Docker daemon  62.39MBSending build context to Docker daemon  62.95MBSending build context to Docker daemon   63.5MBSending build context to Docker daemon  64.06MBSending build context to Docker daemon  64.62MBSending build context to Docker daemon  65.18MBSending build context to Docker daemon  66.29MBSending build context to Docker daemon  66.85MBSending build context to Docker daemon   67.4MBSending build context to Docker daemon  67.96MBSending build context to Docker daemon  68.52MBSending build context to Docker daemon  69.07MBSending build context to Docker daemon  69.63MBSending build context to Docker daemon  70.19MBSending build context to Docker daemon  71.86MBSending build context to Docker daemon  72.42MBSending build context to Docker daemon  73.53MBSending build context to Docker daemon  74.65MBSending build context to Docker daemon   75.2MBSending build context to Docker daemon  76.87MBSending build context to Docker daemon  77.43MBSending build context to Docker daemon  77.99MBSending build context to Docker daemon  78.54MBSending build context to Docker daemon  79.66MBSending build context to Docker daemon  80.77MBSending build context to Docker daemon  82.44MBSending build context to Docker daemon     83MBSending build context to Docker daemon  83.56MBSending build context to Docker daemon  84.12MBSending build context to Docker daemon  84.67MBSending build context to Docker daemon  85.23MBSending build context to Docker daemon  85.79MBSending build context to Docker daemon  86.34MBSending build context to Docker daemon   86.9MBSending build context to Docker daemon  87.46MBSending build context to Docker daemon  88.01MBSending build context to Docker daemon  88.57MBSending build context to Docker daemon  89.13MBSending build context to Docker daemon  89.69MBSending build context to Docker daemon  90.24MBSending build context to Docker daemon   90.8MBSending build context to Docker daemon  91.36MBSending build context to Docker daemon  91.91MBSending build context to Docker daemon  92.47MBSending build context to Docker daemon  93.59MBSending build context to Docker daemon  94.14MBSending build context to Docker daemon   94.7MBSending build context to Docker daemon  95.26MBSending build context to Docker daemon  95.81MBSending build context to Docker daemon  96.37MBSending build context to Docker daemon  96.93MBSending build context to Docker daemon  97.48MBSending build context to Docker daemon  98.04MBSending build context to Docker daemon   98.6MBSending build context to Docker daemon  99.16MBSending build context to Docker daemon  99.71MBSending build context to Docker daemon  100.3MBSending build context to Docker daemon  100.8MBSending build context to Docker daemon  101.2MB
+Step 1/6 : FROM node:alpine
+ ---> 72eea7c426fc
+Step 2/6 : WORKDIR '/app'
+ ---> Running in f5b887f9e0fe
+Removing intermediate container f5b887f9e0fe
+ ---> 252f210f3085
+Step 3/6 : COPY package.json .
+ ---> a334d40ec238
+Step 4/6 : RUN npm install
+ ---> Running in d2e49658f9ad
+[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m extract-text-webpack-plugin@1.0.1: Deprecated. Please use https://github.com/webpack-contrib/mini-css-extract-plugin
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m core-js@2.6.11: core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m fsevents@1.0.17: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m browserslist@1.7.7: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m chokidar@1.7.0: Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m request@2.81.0: request has been deprecated, see https://github.com/request/request/issues/3142
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m hawk@3.1.3: This module moved to @hapi/hawk. Please make sure to switch over as this distribution is no longer supported and may contain bugs and critical security issues.
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m fsevents@1.2.13: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m sntp@1.0.9: This module moved to @hapi/sntp. Please make sure to switch over as this distribution is no longer supported and may contain bugs and critical security issues.
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m cryptiles@2.0.5: This version has been deprecated in accordance with the hapi support policy (hapi.im/support). Please upgrade to the latest version to get the best features, bug fixes, and security patches. If you are unable to upgrade at this time, paid support is available for older versions (hapi.im/commercial).
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m boom@2.10.1: This version has been deprecated in accordance with the hapi support policy (hapi.im/support). Please upgrade to the latest version to get the best features, bug fixes, and security patches. If you are unable to upgrade at this time, paid support is available for older versions (hapi.im/commercial).
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m hoek@2.16.3: This version has been deprecated in accordance with the hapi support policy (hapi.im/support). Please upgrade to the latest version to get the best features, bug fixes, and security patches. If you are unable to upgrade at this time, paid support is available for older versions (hapi.im/commercial).
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m request@2.88.2: request has been deprecated, see https://github.com/request/request/issues/3142
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
+[0m
+> core-js@2.6.11 postinstall /app/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+[96mThank you for using core-js ([94m https://github.com/zloirock/core-js [96m) for polyfilling JavaScript standard library![0m
+
+[96mThe project needs your help! Please consider supporting of core-js on Open Collective or Patreon: [0m
+[96m>[94m https://opencollective.com/core-js [0m
+[96m>[94m https://www.patreon.com/zloirock [0m
+
+[96mAlso, the author of core-js ([94m https://github.com/zloirock [96m) is looking for a good job -)[0m
+
+[91mnpm[0m[91m notice created a lockfile as package-lock.json. You should commit this file.
+[0m[91mnpm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.0.17 (node_modules/react-scripts/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.0.17: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: abbrev@1.0.9 (node_modules/fsevents/node_modules/abbrev):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/abbrev' -> '/app/node_modules/fsevents/node_modules/.abbrev.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: ansi-regex@2.0.0 (node_modules/fsevents/node_modules/ansi-regex):
+[0m[91mnpm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/ansi-regex' -> '/app/node_modules/fsevents/node_modules/.ansi-regex.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: ansi-styles@2.2.1 (node_modules/fsevents/node_modules/ansi-styles):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/ansi-styles' -> '/app/node_modules/fsevents/node_modules/.ansi-styles.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: aproba@1.0.4 (node_modules/fsevents/node_modules/aproba):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/aproba' -> '/app/node_modules/fsevents/node_modules/.aproba.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: asn1@0.2.3 (node_modules/fsevents/node_modules/asn1):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/asn1' -> '/app/node_modules/fsevents/node_modules/.asn1.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: assert-plus@0.2.0 (node_modules/fsevents/node_modules/assert-plus):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/assert-plus' -> '/app/node_modules/fsevents/node_modules/.assert-plus.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: asynckit@0.4.0 (node_modules/fsevents/node_modules/asynckit):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/asynckit' -> '/app/node_modules/fsevents/node_modules/.asynckit.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: aws-sign2@0.6.0 (node_modules/fsevents/node_modules/aws-sign2):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/aws-sign2' -> '/app/node_modules/fsevents/node_modules/.aws-sign2.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: aws4@1.5.0 (node_modules/fsevents/node_modules/aws4):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/aws4' -> '/app/node_modules/fsevents/node_modules/.aws4.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: balanced-match@0.4.2 (node_modules/fsevents/node_modules/balanced-match):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/balanced-match' -> '/app/node_modules/fsevents/node_modules/.balanced-match.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: buffer-shims@1.0.0 (node_modules/fsevents/node_modules/buffer-shims):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/buffer-shims' -> '/app/node_modules/fsevents/node_modules/.buffer-shims.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: caseless@0.11.0 (node_modules/fsevents/node_modules/caseless):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/caseless' -> '/app/node_modules/fsevents/node_modules/.caseless.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: supports-color@2.0.0 (node_modules/fsevents/node_modules/chalk/node_modules/supports-color):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/chalk/node_modules/supports-color' -> '/app/node_modules/fsevents/node_modules/chalk/node_modules/.supports-color.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: code-point-at@1.1.0 (node_modules/fsevents/node_modules/code-point-at):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/code-point-at' -> '/app/node_modules/fsevents/node_modules/.code-point-at.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: concat-map@0.0.1 (node_modules/fsevents/node_modules/concat-map):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/concat-map' -> '/app/node_modules/fsevents/node_modules/.concat-map.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: console-control-strings@1.1.0 (node_modules/fsevents/node_modules/console-control-strings):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/console-control-strings' -> '/app/node_modules/fsevents/node_modules/.console-control-strings.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: core-util-is@1.0.2 (node_modules/fsevents/node_modules/core-util-is):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/core-util-is' -> '/app/node_modules/fsevents/node_modules/.core-util-is.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: assert-plus@1.0.0 (node_modules/fsevents/node_modules/dashdash/node_modules/assert-plus):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/dashdash/node_modules/assert-plus' -> '/app/node_modules/fsevents/node_modules/dashdash/node_modules/.assert-plus.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: deep-extend@0.4.1 (node_modules/fsevents/node_modules/deep-extend):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/deep-extend' -> '/app/node_modules/fsevents/node_modules/.deep-extend.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: delayed-stream@1.0.0 (node_modules/fsevents/node_modules/delayed-stream):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/delayed-stream' -> '/app/node_modules/fsevents/node_modules/.delayed-stream.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: delegates@1.0.0 (node_modules/fsevents/node_modules/delegates):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/delegates' -> '/app/node_modules/fsevents/node_modules/.delegates.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: escape-string-regexp@1.0.5 (node_modules/fsevents/node_modules/escape-string-regexp):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/escape-string-regexp' -> '/app/node_modules/fsevents/node_modules/.escape-string-regexp.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: extend@3.0.0 (node_modules/fsevents/node_modules/extend):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/extend' -> '/app/node_modules/fsevents/node_modules/.extend.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: extsprintf@1.0.2 (node_modules/fsevents/node_modules/extsprintf):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/extsprintf' -> '/app/node_modules/fsevents/node_modules/.extsprintf.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: forever-agent@0.6.1 (node_modules/fsevents/node_modules/forever-agent):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/forever-agent' -> '/app/node_modules/fsevents/node_modules/.forever-agent.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fs.realpath@1.0.0 (node_modules/fsevents/node_modules/fs.realpath):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/fs.realpath' -> '/app/node_modules/fsevents/node_modules/.fs.realpath.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: generate-function@2.0.0 (node_modules/fsevents/node_modules/generate-function):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/generate-function' -> '/app/node_modules/fsevents/node_modules/.generate-function.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: assert-plus@1.0.0 (node_modules/fsevents/node_modules/getpass/node_modules/assert-plus):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/getpass/node_modules/assert-plus' -> '/app/node_modules/fsevents/node_modules/getpass/node_modules/.assert-plus.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: graceful-fs@4.1.11 (node_modules/fsevents/node_modules/graceful-fs):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/graceful-fs' -> '/app/node_modules/fsevents/node_modules/.graceful-fs.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: graceful-readlink@1.0.1 (node_modules/fsevents/node_modules/graceful-readlink):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/graceful-readlink' -> '/app/node_modules/fsevents/node_modules/.graceful-readlink.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: has-unicode@2.0.1 (node_modules/fsevents/node_modules/has-unicode):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/has-unicode' -> '/app/node_modules/fsevents/node_modules/.has-unicode.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: hoek@2.16.3 (node_modules/fsevents/node_modules/hoek):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/hoek' -> '/app/node_modules/fsevents/node_modules/.hoek.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: inherits@2.0.3 (node_modules/fsevents/node_modules/inherits):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/inherits' -> '/app/node_modules/fsevents/node_modules/.inherits.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: ini@1.3.4 (node_modules/fsevents/node_modules/ini):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/ini' -> '/app/node_modules/fsevents/node_modules/.ini.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: is-property@1.0.2 (node_modules/fsevents/node_modules/is-property):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/is-property' -> '/app/node_modules/fsevents/node_modules/.is-property.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: is-typedarray@1.0.0 (node_modules/fsevents/node_modules/is-typedarray):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/is-typedarray' -> '/app/node_modules/fsevents/node_modules/.is-typedarray.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: isarray@1.0.0 (node_modules/fsevents/node_modules/isarray):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/isarray' -> '/app/node_modules/fsevents/node_modules/.isarray.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: isstream@0.1.2 (node_modules/fsevents/node_modules/isstream):
+npm WARN [0m[91menoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/isstream' -> '/app/node_modules/fsevents/node_modules/.isstream.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: jsbn@0.1.0 (node_modules/fsevents/node_modules/jsbn):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/jsbn' -> '/app/node_modules/fsevents/node_modules/.jsbn.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: json-schema@0.2.3 (node_modules/fsevents/node_modules/json-schema):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/json-schema' -> '/app/node_modules/fsevents/node_modules/.json-schema.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: json-stringify-safe@5.0.1 (node_modules/fsevents/node_modules/json-stringify-safe):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/json-stringify-safe' -> '/app/node_modules/fsevents/node_modules/.json-stringify-safe.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: jsonpointer@4.0.1 (node_modules/fsevents/node_modules/jsonpointer):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/jsonpointer' -> '/app/node_modules/fsevents/node_modules/.jsonpointer.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: mime-db@1.25.0 (node_modules/fsevents/node_modules/mime-db):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/mime-db' -> '/app/node_modules/fsevents/node_modules/.mime-db.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: minimist@0.0.8 (node_modules/fsevents/node_modules/minimist):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/minimist' -> '/app/node_modules/fsevents/node_modules/.minimist.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: ms@0.7.1 (node_modules/fsevents/node_modules/ms):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/ms' -> '/app/node_modules/fsevents/node_modules/.ms.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: number-is-nan@1.0.1 (node_modules/fsevents/node_modules/number-is-nan):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/number-is-nan' -> '/app/node_modules/fsevents/node_modules/.number-is-nan.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: oauth-sign@0.8.2 (node_modules/fsevents/node_modules/oauth-sign):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/oauth-sign' -> '/app/node_modules/fsevents/node_modules/.oauth-sign.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: object-assign@4.1.0 (node_modules/fsevents/node_modules/object-assign):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/object-assign' -> '/app/node_modules/fsevents/node_modules/.object-assign.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: path-is-absolute@1.0.1 (node_modules/fsevents/node_modules/path-is-absolute):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/path-is-absolute' -> '/app/node_modules/fsevents/node_modules/.path-is-absolute.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: pinkie@2.0.4 (node_modules/fsevents/node_modules/pinkie):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/pinkie' -> '/app/node_modules/fsevents/node_modules/.pinkie.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: process-nextick-args@1.0.7 (node_modules/fsevents/node_modules/process-nextick-args):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/process-nextick-args' -> '/app/node_modules/fsevents/node_modules/.process-nextick-args.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: punycode@1.4.1 (node_modules/fsevents/node_modules/punycode):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/punycode' -> '/app/node_modules/fsevents/node_modules/.punycode.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: qs@6.3.0 (node_modules/fsevents/node_modules/qs):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/qs' -> '/app/node_modules/fsevents/node_modules/.qs.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: minimist@1.2.0 (node_modules/fsevents/node_modules/rc/node_modules/minimist):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/rc/node_modules/minimist' -> '/app/node_modules/fsevents/node_modules/rc/node_modules/.minimist.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: semver@5.3.0 (node_modules/fsevents/node_modules/semver):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/semver' -> '/app/node_modules/fsevents/node_modules/.semver.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: set-blocking@2.0.0 (node_modules/fsevents/node_modules/set-blocking):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/set-blocking' -> '/app/node_modules/fsevents/node_modules/.set-blocking.DELETE'
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: signal-exit@3.0.2 (node_modules/fsevents/node_modules/signal-exit):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/signal-exit' -> '/app/node_modules/fsevents/node_modules/.signal-exit.DELETE'
+npm WARN [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: assert-plus@1.0.0 (node_modules/fsevents/node_modules/sshpk/node_modules/assert-plus):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91menoent[0m[91m SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/sshpk/node_modules/assert-plus' -> '/app/node_modules/fsevents/node_modules/sshpk/node_modules/.assert-plus.DELETE'
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: string_decoder@0.10.31 (node_modules/fsevents/node_modules/string_decoder):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91menoent[0m[91m SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/string_decoder' -> '/app/node_modules/fsevents/node_modules/.string_decoder.DELETE'
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: stringstream@0.0.5 (node_modules/fsevents/node_modules/stringstream):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91menoent[0m[91m SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/stringstream' -> '/app/node_modules/fsevents/node_modules/.stringstream.DELETE'
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: strip-json-comments@1.0.4 (node_modules/fsevents/node_modules/strip-json-comments):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91menoent[0m[91m SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/strip-json-comments' -> '/app/node_modules/fsevents/node_modules/.strip-json-comments.DELETE'
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: supports-color@0.2.0 (node_modules/fsevents/node_modules/supports-color):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91menoent[0m[91m SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/supports-color' -> '/app/node_modules/fsevents/node_modules/.supports-color.DELETE'
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: tunnel-agent@0.4.3 (node_modules/fsevents/node_modules/tunnel-agent):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91menoent[0m[91m SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/tunnel-agent' -> '/app/node_modules/fsevents/node_modules/.tunnel-agent.DELETE'
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: tweetnacl@0.14.5 (node_modules/fsevents/node_modules/tweetnacl):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91menoent[0m[91m SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/tweetnacl' -> '/app/node_modules/fsevents/node_modules/.tweetnacl.DELETE'
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: uid-number@0.0.6 (node_modules/fsevents/node_modules/uid-number):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91menoent[0m[91m SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/uid-number' -> '/app/node_modules/fsevents/node_modules/.uid-number.DELETE'
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: util-deprecate@1.0.2 (node_modules/fsevents/node_modules/util-deprecate):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91menoent[0m[91m SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/util-deprecate' -> '/app/node_modules/fsevents/node_modules/.util-deprecate.DELETE'
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: uuid@3.0.1 (node_modules/fsevents/node_modules/uuid):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91menoent[0m[91m SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/uuid' -> '/app/node_modules/fsevents/node_modules/.uuid.DELETE'
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: wrappy@1.0.2 (node_modules/fsevents/node_modules/wrappy):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91menoent[0m[91m SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/wrappy' -> '/app/node_modules/fsevents/node_modules/.wrappy.DELETE'
+[0m[91mnpm[0m[91m [0m[91mWARN[0madded 981 packages from 671 contributors and audited 1102 packages in 104.361s
+[91m optional SKIPPING OPTIONAL DEPENDENCY: xtend@4.0.1 (node_modules/fsevents/node_modules/xtend):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '/app/node_modules/fsevents/node_modules/xtend' -> '/app/node_modules/fsevents/node_modules/.xtend.DELETE'
+
+[0m
+4 packages are looking for funding
+  run `npm fund` for details
+
+found 101 vulnerabilities (37 low, 35 moderate, 28 high, 1 critical)
+  run `npm audit fix` to fix them, or `npm audit` for details
+Removing intermediate container d2e49658f9ad
+ ---> a462fa2b1352
+Step 5/6 : COPY . .
+ ---> 4fdb61b87171
+Step 6/6 : CMD ["npm", "run", "start"]
+ ---> Running in 9aa3dcff1175
+Removing intermediate container 9aa3dcff1175
+ ---> e652d15f21c6
+Successfully built e652d15f21c6
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker run -p[K[K[K[K[K[Kcona[K[K[K[K[K[K[K[K[K[K[Kls
+[0m[01;34mbuild[0m  Dockerfile.dev  [01;34mhelp[0m  [01;34mnode_modules[0m  package.json  [01;34mpublic[0m  README.md  [01;34msrc[0m  typescript
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ dock[K[K[K[Kls -[K-a
+[0m[01;34m.[0m  [01;34m..[0m  [01;34mbuild[0m  Dockerfile.dev  .gitignore  [01;34mhelp[0m  [01;34mnode_modules[0m  package.json  [01;34mpublic[0m  README.md  [01;34msrc[0m  typescript
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ ls -l
+total 184
+drwxr-xr-x   3 itsbalu itsbalu  4096 May 28 07:59 [0m[01;34mbuild[0m
+-rw-r--r--   1 itsbalu itsbalu   109 May 28 11:56 Dockerfile.dev
+drwxr-xr-x   2 itsbalu itsbalu  4096 May 28 11:25 [01;34mhelp[0m
+drwxr-xr-x 795 itsbalu itsbalu 36864 May 28 07:59 [01;34mnode_modules[0m
+-rw-r--r--   1 itsbalu itsbalu   371 May 28 07:57 package.json
+drwxr-xr-x   2 itsbalu itsbalu  4096 May 28 07:57 [01;34mpublic[0m
+-rw-r--r--   1 itsbalu itsbalu 80668 May 28 07:57 README.md
+drwxr-xr-x   2 itsbalu itsbalu  4096 May 28 07:57 [01;34msrc[0m
+-rw-r--r--   1 itsbalu itsbalu 40960 Jun  3 00:24 typescript
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container run -p 3000:3000 e652d15f21c6-e652d15f21c6-e652d15f21c6ne652d15f21c6ae652d15f21c6me652d15f21c6[Ce652d15f21c6 e652d15f21c6ne652d15f21c6oe652d15f21c6de652d15f21c6[Ce652d15f21c6ce652d15f21c6we652d15f21c6oe652d15f21c6=e652d15f21c6[1Pe652d15f21c6[1Pe652d15f21c6ne652d15f21c6me652d15f21c6 e652d15f21c6
+
+> frontend@0.1.0 start /app
+> react-scripts start
+
+Starting the development server...
+
+(node:24) Warning: Accessing non-existent property 'cat' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24) Warning: Accessing non-existent property 'cd' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'chmod' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'cp' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'dirs' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'pushd' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'popd' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'echo' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'tempdir' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'pwd' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'exec' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'ls' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'find' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'grep' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'head' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'ln' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'mkdir' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'rm' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'mv' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'sed' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'set' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'sort' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'tail' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'test' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'to' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'toEnd' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'touch' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'uniq' of module exports inside circular dependency
+(node:24) Warning: Accessing non-existent property 'which' of module exports inside circular dependency
+Compiled successfully!
+
+The app is running at:
+
+  http://localhost:3000/
+
+Note that the development build is not optimized.
+To create a production build, use npm run build.
+
+^C
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ 
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ ls
+[0m[01;34mbuild[0m  Dockerfile.dev  [01;34mhelp[0m  [01;34mnode_modules[0m  package.json  [01;34mpublic[0m  README.md  [01;34msrc[0m  typescript
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ do[K[Krm [Kdir node_modules/[K
+rmdir: failed to remove 'node_modules': Directory not empty
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ rmdir -f node_modules/
+rmdir: invalid option -- 'f'
+Try 'rmdir --help' for more information.
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ rmdir --help
+Usage: rmdir [OPTION]... DIRECTORY...
+Remove the DIRECTORY(ies), if they are empty.
+
+      --ignore-fail-on-non-empty
+                  ignore each failure that is solely because a directory
+                    is non-empty
+  -p, --parents   remove DIRECTORY and its ancestors; e.g., 'rmdir -p a/b/c' is
+                    similar to 'rmdir a/b/c a/b a'
+  -v, --verbose   output a diagnostic for every directory processed
+      --help     display this help and exit
+      --version  output version information and exit
+
+GNU coreutils online help: <http://www.gnu.org/software/coreutils/>
+Full documentation at: <http://www.gnu.org/software/coreutils/rmdir>
+or available locally via: info '(coreutils) rmdir invocation'
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ rm -rf node_modules/*
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ ls
+[0m[01;34mbuild[0m  Dockerfile.dev  [01;34mhelp[0m  [01;34mnode_modules[0m  package.json  [01;34mpublic[0m  README.md  [01;34msrc[0m  typescript
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ ls n[K[K[K[Krmdir node_modules/
+rmdir: failed to remove 'node_modules/': Directory not empty
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ ls node_modules/
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ cd node_modules/
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/node_modules[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/node_modules[00m$ ls
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/node_modules[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/node_modules[00m$ cd ..
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ rmdir [K[K[K[K node_modules/
+rm: cannot remove 'node_modules/': Is a directory
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ rmdir node_modules/
+rmdir: failed to remove 'node_modules/': Directory not empty
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ unlink node_modules/[K
+unlink: cannot unlink 'node_modules': Is a directory
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ rmdir[K[K[K[K[Kcd node_modules/
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/node_modules[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/node_modules[00m$ ls -a
+[0m[01;34m.[0m  [01;34m..[0m  [01;34m.bin[0m  [01;34m.cache[0m
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/node_modules[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/node_modules[00m$ unlink *
+unlink: cannot unlink '*': No such file or directory
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/node_modules[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/node_modules[00m$ unlink *[K. .. .bin.[K .cache
+unlink: extra operand ‘..’
+Try 'unlink --help' for more information.
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/node_modules[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/node_modules[00m$ unlink .bin
+unlink: cannot unlink '.bin': Is a directory
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/node_modules[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/node_modules[00m$ rm -rf node[K[K[K[K[K[K[K[K[K[K[Kcd ..
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ rum [K[K[Km -rf node_modules/
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ ls
+[0m[01;34mbuild[0m  Dockerfile.dev  [01;34mhelp[0m  package.json  [01;34mpublic[0m  README.md  [01;34msrc[0m  typescript
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ cd src
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ cat App.js
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <div className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h2>Welcome to React</h2>
+        </div>
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+      </div>
+    );
+  }
+}
+
+export default App;
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ vi a[KApp./[Kjs
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;38r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[38;1H"App.js" 21 lines, 496 characters[1;1Himport React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+  render() {
+    return ([8;7H<div className="App">[9;9H<div className="App-header">[10;11H<img src={logo} className="App-logo" alt="logo" />[11;11H<h2>Welcome to React</h2>[12;9H</div>[13;9H<p className="App-intro">[14;11HTo get started, edit <code>src/App.js</code> and save to reload.[15;9H</p>[16;7H</div>
+    );
+  }
+}
+
+export default App;
+[94m~                                                                                                                                                     [23;1H~                                                                                                                                                     [24;1H~                                                                                                                                                     [25;1H~                                                                                                                                                     [26;1H~                                                                                                                                                     [27;1H~                                                                                                                                                     [28;1H~                                                                                                                                                     [29;1H~                                                                                                                                                     [30;1H~                                                                                                                                                     [31;1H~                                                                                                                                                     [32;1H~                                                                                                                                                     [33;1H~                                                                                                                                                     [34;1H~                                                                                                                                                     [35;1H~                                                                                                                                                     [36;1H~                                                                                                                                                     [37;1H~                                                                                                                                                     [1;1H[?25h[?2004l[?2004h[?2004l[?25l[1;37r[m[1;1H[L[1;38r[1;1HB[38;1H[K[1;2H[?25h[?2004h[?25l[38;1H:[?2004h[?25hq[?25l[97m[41mE37: No write since last change (add ! to override)[?2004h[1;1H[?25h[?2004l[?25l[m:B[?25h[?25l[?25h[?2004h[?25lB[1;2H[K[1;1H[?25h[?25l[38;1H[K[38;1H:[?2004h[?25h!q[?25l:!q[?2004l[?1l>[?25h[?1049l[23;0;0t
+[No write since last change]
+[?2004l/bin/bash: q: command not found
+[?2004h
+shell returned 127
+
+Press ENTER or type command to continue[?1049h[22;0;0t[?1h=[?2004h[27m[23m[29m[m[H[2J[?25l[1;1HB
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+  render() {
+    return ([9;7H<div className="App">[10;9H<div className="App-header">[11;11H<img src={logo} className="App-logo" alt="logo" />[12;11H<h2>Welcome to React</h2>[13;9H</div>[14;9H<p className="App-intro">[15;11HTo get started, edit <code>src/App.js</code> and save to reload.[16;9H</p>[17;7H</div>
+    );
+  }
+}
+
+export default App;
+[94m~                                                                                                                                                     [24;1H~                                                                                                                                                     [25;1H~                                                                                                                                                     [26;1H~                                                                                                                                                     [27;1H~                                                                                                                                                     [28;1H~                                                                                                                                                     [29;1H~                                                                                                                                                     [30;1H~                                                                                                                                                     [31;1H~                                                                                                                                                     [32;1H~                                                                                                                                                     [33;1H~                                                                                                                                                     [34;1H~                                                                                                                                                     [35;1H~                                                                                                                                                     [36;1H~                                                                                                                                                     [37;1H~                                                                                                                                                     [1;1H[?25h[?25l[38;1H[m:[?2004h[?25hq![?25l[?2004l[?2004l[?1l>[?25h[?1049l[23;0;0t
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ emacs App.js
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ docker [K build -f Dock[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kcd ..[K[K[K[K[Kdocker container run -p 3000:0[K3000 [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kcd ..
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker [K[K[K[K[K[K[Kdocker image ls e652d15f21c6
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+<none>              <none>              e652d15f21c6        20 minutes ago      333MB
+node                alpine              72eea7c426fc        12 days ago         117MB
+redis               latest              987b78fc9e38        2 weeks ago         104MB
+busybox             latest              78096d0a5478        2 weeks ago         1.22MB
+my-custom-node      latest              e0e6af798a01        3 weeks ago         940MB
+my-custom-nginx     latest              1bde176db0c5        3 weeks ago         129MB
+mysql               latest              a7a67c95e831        5 weeks ago         541MB
+jenkins/jenkins     latest              127b486c7026        5 weeks ago         648MB
+mongo               latest              3f3daf863757        5 weeks ago         388MB
+alpine              latest              f70734b6a266        5 weeks ago         5.61MB
+php                 apache              411f1fb43be0        5 weeks ago         414MB
+nginx               latest              602e111c06b6        5 weeks ago         127MB
+hello-world         latest              bf756fb1ae65        5 months ago        13.3kB
+node                10.15.1             8fc2110c6978        16 months ago       897MB
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
+4b75e94c5326        e652d15f21c6        "docker-entrypoint.s…"   16 minutes ago      Exited (0) 15 minutes ago                       nodecwnm
+9f5cb1c3a420        php:apache          "docker-php-entrypoi…"   4 weeks ago         Exited (0) 2 weeks ago                          myPHP
+55c7b4f716bc        mysql               "docker-entrypoint.s…"   4 weeks ago         Exited (0) 2 weeks ago                          myMySQL
+311787be85a5        mongo               "docker-entrypoint.s…"   4 weeks ago         Exited (0) 4 weeks ago                          myMongocv
+c026c992c631        mongo               "docker-entrypoint.s…"   4 weeks ago         Exited (0) 4 weeks ago                          myMongodet
+8bddb2b1947c        nginx               "nginx -g 'daemon of…"   4 weeks ago         Exited (0) 8 days ago                           myNginxv
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container run [K[K[K[Kstart 4b75e94c5326[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K[K[K[K[K[K[K --help
+
+Usage:	docker container start [OPTIONS] CONTAINER [CONTAINER...]
+
+Start one or more stopped containers
+
+Options:
+  -a, --attach               Attach STDOUT/STDERR and forward signals
+      --detach-keys string   Override the key sequence for detaching a container
+  -i, --interactive          Attach container's STDIN
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ daoc[K[K[Kocker container start 4b75e94c5326
+4b75e94c5326
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+4b75e94c5326        e652d15f21c6        "docker-entrypoint.s…"   17 minutes ago      Up 7 seconds        0.0.0.0:3000->3000/tcp   nodecwnm
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container exec -it 4b75e94c5326 sh
+/app # [6nls
+[0;0mDockerfile.dev[m     [1;34mbuild[m              [1;34mnode_modules[m       [0;0mpackage.json[m       [1;34msrc[m
+[0;0mREADME.md[m          [1;34mhelp[m               [0;0mpackage-lock.json[m  [1;34mpublic[m             [0;0mtypescript[m
+/app # [6ncd src
+/app/src # [6nls
+[0;0mApp.css[m      [0;0mApp.js[m       [0;0mApp.test.js[m  [0;0mindex.css[m    [0;0mindex.js[m     [0;0mlogo.svg[m
+/app/src # [6nvi App.js
+[?1049h[H[J[1;1Himport React, { Component } from 'react';[2;1Himport logo from './logo.svg';[3;1Himport './App.css';[5;1Hclass App extends Component {[6;3Hrender() {[7;5Hreturn ([8;7H<div className="App">[9;9H<div className="App-header">[10;11H<img src={logo} className="App-logo" alt="logo" />[11;11H<h2>Welcome to React</h2>[12;9H</div>[13;9H<p className="App-intro">[14;11HTo get started, edit <code>src/App.js</code> and save to reload.[15;9H</p>[16;7H</div>[17;5H);[18;3H}[19;1H}[21;1Hexport default App;[22;1H~[23;1H~[24;1H~[25;1H~[26;1H~[27;1H~[28;1H~[29;1H~[30;1H~[31;1H~[32;1H~[33;1H~[34;1H~[35;1H~[36;1H~[37;1H~[1;1H[38;1H[K- App.js 1/21 4%[1;1H[1;2H[1;3H[1;4H[1;5H[2;5H[38;1H[K- App.js 2/21 9%[2;5H[3;5H[38;1H[K- App.js 3/21 14%[3;5H[4;1H[38;1H[K- App.js 4/21 19%[4;1H[5;1H[38;1H[K- App.js 5/21 23%[5;1H[6;1H[38;1H[K- App.js 6/21 28%[6;1H[7;1H[38;1H[K- App.js 7/21 33%[7;1H[8;1H[38;1H[K- App.js 8/21 38%[8;1H[8;2H[8;3H[8;4H[9;4H[38;1H[K- App.js 9/21 42%[9;4H[10;4H[38;1H[K- App.js 10/21 47%[10;4H[11;4H[38;1H[K- App.js 11/21 52%[11;4H[11;5H[11;6H[11;7H[11;8H[11;9H[11;10H[11;11H[11;12H[11;13H[11;14H[11;15H[11;15H[38;1H[KI App.js 11/21 52%[11;15H[11;15Helcome to React</h2> [11;15H[38;1H[KI App.js [Modified] 11/21 52%[11;15H[11;15Hlcome to React</h2> [11;15H[11;15Hcome to React</h2> [11;15H[11;15Home to React</h2> [11;15H[11;15Hme to React</h2> [11;15H[11;15He to React</h2> [11;15H[11;15H to React</h2> [11;15H[11;15Hto React</h2> [11;15H[11;15Ho React</h2> [11;15H[11;15H React</h2> [11;15H[11;15HReact</h2> [11;15H[11;15Heact</h2> [11;15H[11;15Hact</h2> [11;15H[11;15Hct</h2> [11;15H[11;15Ht</h2> [11;15H[11;15H</h2> [11;15H[11;15HH</h2>[11;16H[11;16He</h2>[11;17H[11;17Hl</h2>[11;18H[11;18Hl</h2>[11;19H[11;19Ho</h2>[11;20H[11;20Hw</h2>[11;21H[11;20H</h2> [11;20H[11;20H </h2>[11;21H[11;21Hf</h2>[11;22H[11;22Hr</h2>[11;23H[11;23Ho</h2>[11;24H[11;24Hm</h2>[11;25H[11;25H </h2>[11;26H[11;26Hc</h2>[11;27H[11;27Ho</h2>[11;28H[11;28Hn</h2>[11;29H[11;29Ht</h2>[11;30H[11;30Ha</h2>[11;31H[11;31Hi</h2>[11;32H[11;32Hn</h2>[11;33H[11;33He</h2>[11;34H[11;34Hr</h2>[11;35H[11;35H!</h2>[11;36H[11;36H </h2>[11;37H[11;37Ha</h2>[11;38H[11;38Hn</h2>[11;39H[11;39Hd</h2>[11;40H[11;40H </h2>[11;41H[11;41Hn</h2>[11;42H[11;42Ho</h2>[11;43H[11;43Ht</h2>[11;44H[11;44H </h2>[11;45H[11;45Hf</h2>[11;46H[11;46Hr</h2>[11;47H[11;47Ho</h2>[11;48H[11;48Hm</h2>[11;49H[11;49H </h2>[11;50H[11;50Hh</h2>[11;51H[11;51Ho</h2>[11;52H[11;52Hs</h2>[11;53H[11;53Ht</h2>[11;54H[11;54H </h2>[11;55H[11;55Hf</h2>[11;56H[11;56Hi</h2>[11;57H[11;57Hl</h2>[11;58H[11;58He</h2>[11;59H[11;59H.</h2>[11;60H[11;60H </h2>[11;61H[11;61HT</h2>[11;62H[11;62Hh</h2>[11;63H[11;63Hi</h2>[11;64H[11;64Hs</h2>[11;65H[11;65H </h2>[11;66H[11;66Hi</h2>[11;67H[11;67Hs</h2>[11;68H[11;68H </h2>[11;69H[11;69Hb</h2>[11;70H[11;70He</h2>[11;71H[11;71Hf</h2>[11;72H[11;72Ho</h2>[11;73H[11;73He</h2>[11;74H[11;74Hr</h2>[11;75H[11;74H</h2> [11;74H[11;73H</h2> [11;73H[11;73Hr</h2>[11;74H[11;74He</h2>[11;75H[11;75H </h2>[11;76H[11;76Hv</h2>[11;77H[11;77Ho</h2>[11;78H[11;78Hl</h2>[11;79H[11;79Hu</h2>[11;80H[11;80Hm</h2>[11;81H[11;81He</h2>[11;82H[11;82Hs</h2>[11;83H[11;83H </h2>[11;84H[11;84Hb</h2>[11;85H[11;85Hl</h2>[11;86H[11;86Ha</h2>[11;87H[11;87H </h2>[11;88H[11;88Hb</h2>[11;89H[11;89Hl</h2>[11;90H[11;90Ha</h2>[11;91H[11;91H </h2>[11;92H[11;92Hb</h2>[11;93H[11;93Hl</h2>[11;94H[11;94Ha</h2>[11;95H[11;94H[38;1H[K- App.js [Modified] 11/21 52%[11;94H[38;1H[K:wq[11;94H[11;94H[38;1H[K'App.js' 21L, 560C[11;94H[38;1H[K[?1049l/app/src # [6nvi A/app/src # vi App.[J
+[?1049h[H[J[2;1H~[3;1H~[4;1H~[5;1H~[6;1H~[7;1H~[8;1H~[9;1H~[10;1H~[11;1H~[12;1H~[13;1H~[14;1H~[15;1H~[16;1H~[17;1H~[18;1H~[19;1H~[20;1H~[21;1H~[22;1H~[23;1H~[24;1H~[25;1H~[26;1H~[27;1H~[28;1H~[29;1H~[30;1H~[31;1H~[32;1H~[33;1H~[34;1H~[35;1H~[36;1H~[37;1H~[1;1H[38;1H[K- App. 1/1 100%[1;1H[38;1H[K:q![1;1H[1;1H[38;1H[K- App. 1/1 100%[1;1H[38;1H[K[?1049l/app/src # [6nls
+[0;0mApp.css[m      [0;0mApp.js[m       [0;0mApp.test.js[m  [0;0mindex.css[m    [0;0mindex.js[m     [0;0mlogo.svg[m
+/app/src # [6nvi App.js
+[?1049h[H[J[1;1Himport React, { Component } from 'react';[2;1Himport logo from './logo.svg';[3;1Himport './App.css';[5;1Hclass App extends Component {[6;3Hrender() {[7;5Hreturn ([8;7H<div className="App">[9;9H<div className="App-header">[10;11H<img src={logo} className="App-logo" alt="logo" />[11;11H<h2>Hello from container! and not from host file. This is before volumes bla bla bla</h2>[12;9H</div>[13;9H<p className="App-intro">[14;11HTo get started, edit <code>src/App.js</code> and save to reload.[15;9H</p>[16;7H</div>[17;5H);[18;3H}[19;1H}[21;1Hexport default App;[22;1H~[23;1H~[24;1H~[25;1H~[26;1H~[27;1H~[28;1H~[29;1H~[30;1H~[31;1H~[32;1H~[33;1H~[34;1H~[35;1H~[36;1H~[37;1H~[1;1H[38;1H[K- App.js 1/21 4%[1;1H[2;1H[38;1H[K- App.js 2/21 9%[2;1H[3;1H[38;1H[K- App.js 3/21 14%[3;1H[4;1H[38;1H[K- App.js 4/21 19%[4;1H[5;1H[38;1H[K- App.js 5/21 23%[5;1H[6;1H[38;1H[K- App.js 6/21 28%[6;1H[7;1H[38;1H[K- App.js 7/21 33%[7;1H[8;1H[38;1H[K- App.js 8/21 38%[8;1H[9;1H[38;1H[K- App.js 9/21 42%[9;1H[10;1H[38;1H[K- App.js 10/21 47%[10;1H[11;1H[38;1H[K- App.js 11/21 52%[11;1H[12;1H[38;1H[K- App.js 12/21 57%[12;1H[13;1H[38;1H[K- App.js 13/21 61%[13;1H[14;1H[38;1H[K- App.js 14/21 66%[14;1H[14;2H[14;3H[14;4H[14;5H[14;6H[14;7H[14;8H[14;9H[14;10H[14;11H[14;11H[38;1H[KI App.js 14/21 66%[14;11H[14;11Ho get started, edit <code>src/App.js</code> and save to reload. [14;11H[38;1H[KI App.js [Modified] 14/21 66%[14;11H[14;11H get started, edit <code>src/App.js</code> and save to reload. [14;11H[14;11Hget started, edit <code>src/App.js</code> and save to reload. [14;11H[14;11Het started, edit <code>src/App.js</code> and save to reload. [14;11H[14;11Ht started, edit <code>src/App.js</code> and save to reload. [14;11H[14;11H started, edit <code>src/App.js</code> and save to reload. [14;11H[14;11Hstarted, edit <code>src/App.js</code> and save to reload. [14;11H[14;11Htarted, edit <code>src/App.js</code> and save to reload. [14;11H[14;11Harted, edit <code>src/App.js</code> and save to reload. [14;11H[14;11Hrted, edit <code>src/App.js</code> and save to reload. [14;11H[14;11Hted, edit <code>src/App.js</code> and save to reload. [14;11H[14;11Hed, edit <code>src/App.js</code> and save to reload. [14;11H[14;11Hd, edit <code>src/App.js</code> and save to reload. [14;11H[14;11H, edit <code>src/App.js</code> and save to reload. [14;11H[14;11H edit <code>src/App.js</code> and save to reload. [14;11H[14;11Hedit <code>src/App.js</code> and save to reload. [14;11H[14;11Hdit <code>src/App.js</code> and save to reload. [14;11H[14;11Hit <code>src/App.js</code> and save to reload. [14;11H[14;11Ht <code>src/App.js</code> and save to reload. [14;11H[14;11H <code>src/App.js</code> and save to reload. [14;11H[14;11HI <code>src/App.js</code> and save to reload.[14;12H[14;13H <code>src/App.js</code> and save to reload.[14;13H[14;13Ha <code>src/App.js</code> and save to reload.[14;14H[14;14Hm <code>src/App.js</code> and save to reload.[14;15H[14;16H <code>src/App.js</code> and save to reload.[14;16H[14;16He <code>src/App.js</code> and save to reload.[14;17H[14;17Hd <code>src/App.js</code> and save to reload.[14;18H[14;18Hi <code>src/App.js</code> and save to reload.[14;19H[14;19Ht <code>src/App.js</code> and save to reload.[14;20H[14;20Hi <code>src/App.js</code> and save to reload.[14;21H[14;21Hn <code>src/App.js</code> and save to reload.[14;22H[14;22Hg <code>src/App.js</code> and save to reload.[14;23H[14;23Ht <code>src/App.js</code> and save to reload.[14;24H[14;25H <code>src/App.js</code> and save to reload.[14;25H[14;25H<code>src/App.js</code> and save to reload. [14;24H[14;23H <code>src/App.js</code> and save to reload. [14;23H[14;24H <code>src/App.js</code> and save to reload.[14;24H[14;24Ht <code>src/App.js</code> and save to reload.[14;25H[14;25Hh <code>src/App.js</code> and save to reload.[14;26H[14;26Hi <code>src/App.js</code> and save to reload.[14;27H[14;27Hs <code>src/App.js</code> and save to reload.[14;28H[14;29H <code>src/App.js</code> and save to reload.[14;29H[14;29Hf <code>src/App.js</code> and save to reload.[14;30H[14;30Hi <code>src/App.js</code> and save to reload.[14;31H[14;31Hl <code>src/App.js</code> and save to reload.[14;32H[14;32He <code>src/App.js</code> and save to reload.[14;33H[14;34H <code>src/App.js</code> and save to reload.[14;34H[14;34Hl <code>src/App.js</code> and save to reload.[14;35H[14;35Hi <code>src/App.js</code> and save to reload.[14;36H[14;36Hk <code>src/App.js</code> and save to reload.[14;37H[14;37He <code>src/App.js</code> and save to reload.[14;38H[14;39H <code>src/App.js</code> and save to reload.[14;39H[14;39Hh <code>src/App.js</code> and save to reload.[14;40H[14;40He <code>src/App.js</code> and save to reload.[14;41H[14;41Hl <code>src/App.js</code> and save to reload.[14;42H[14;42Hl <code>src/App.js</code> and save to reload.[14;43H[14;44H <code>src/App.js</code> and save to reload.[14;44H[14;44Hi <code>src/App.js</code> and save to reload.[14;45H[14;45Hn <code>src/App.js</code> and save to reload.[14;46H[14;46Hs <code>src/App.js</code> and save to reload.[14;47H[14;47Hi <code>src/App.js</code> and save to reload.[14;48H[14;48Hd <code>src/App.js</code> and save to reload.[14;49H[14;49He <code>src/App.js</code> and save to reload.[14;50H[14;51H <code>src/App.js</code> and save to reload.[14;51H[14;51Hc <code>src/App.js</code> and save to reload.[14;52H[14;52Ho <code>src/App.js</code> and save to reload.[14;53H[14;53Hn <code>src/App.js</code> and save to reload.[14;54H[14;54Ht <code>src/App.js</code> and save to reload.[14;55H[14;55Ha <code>src/App.js</code> and save to reload.[14;56H[14;56Hi <code>src/App.js</code> and save to reload.[14;57H[14;57Hn <code>src/App.js</code> and save to reload.[14;58H[14;58He <code>src/App.js</code> and save to reload.[14;59H[14;59Hr <code>src/App.js</code> and save to reload.[14;60H[14;61H <code>src/App.js</code> and save to reload.[14;61H[14;61Hi <code>src/App.js</code> and save to reload.[14;62H[14;62Hn <code>src/App.js</code> and save to reload.[14;63H[14;64H <code>src/App.js</code> and save to reload.[14;64H[14;64Ht <code>src/App.js</code> and save to reload.[14;65H[14;65Hh <code>src/App.js</code> and save to reload.[14;66H[14;66He <code>src/App.js</code> and save to reload.[14;67H[14;68H <code>src/App.js</code> and save to reload.[14;68H[14;68Hf <code>src/App.js</code> and save to reload.[14;69H[14;69Hi <code>src/App.js</code> and save to reload.[14;70H[14;70Hl <code>src/App.js</code> and save to reload.[14;71H[14;71He <code>src/App.js</code> and save to reload.[14;72H[14;73H <code>src/App.js</code> and save to reload.[14;73H[14;73H<code>src/App.js</code> and save to reload. [14;72H[14;71H[38;1H[K- App.js [Modified] 14/21 66%[14;71H[38;1H[K:wq[14;71H[14;71H[38;1H[K'App.js' 21L, 601C[14;71H[38;1H[K[?1049l/app/src # [6nexit
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container run -p 3000:[K[K1:3000 -v /app/node_[K[K[K[K[K[K[K[K[K[K$(pwd):/aop[K[Kpp e652d15f21c6[C e652d15f21c6- e652d15f21c6n e652d15f21c6a e652d15f21c6m e652d15f21c6e e652d15f21c6[C e652d15f21c6[1Pe652d15f21c6[1P e652d15f21c6[1P e652d15f21c6[1P e652d15f21c6[1P e652d15f21c6- e652d15f21c6n e652d15f21c6a e652d15f21c6m e652d15f21c6e e652d15f21c6[C e652d15f21c6n e652d15f21c6o e652d15f21c6d e652d15f21c6e e652d15f21c6c e652d15f21c6w e652d15f21c6o e652d15f21c6n e652d15f21c6m e652d15f21c6[C[C[1@-[1@d[1@ [C[1@-[1@v[1@ [1@/[1@a[1@p[1@p[1@/[1@n[1@o[1@d[1@e[1@_[1@o[1P[1@m[1@o[1@d[1@u[1@c[1@l[1P[1P[1@l[1@e[1@s[1@ 
+939156180ef5edee87d6b3acfbca848563cebdea6d27d0fcdbd7b9fbf02d0e44
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+939156180ef5        e652d15f21c6        "docker-entrypoint.s…"   21 seconds ago      Up 6 seconds        0.0.0.0:3001->3000/tcp   nodecwonm
+4b75e94c5326        e652d15f21c6        "docker-entrypoint.s…"   28 minutes ago      Up 10 minutes       0.0.0.0:3000->3000/tcp   nodecwnm
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ ls
+[0m[01;34mbuild[0m  Dockerfile.dev  [01;34mhelp[0m  [01;34mnode_modules[0m  package.json  [01;34mpublic[0m  README.md  [01;34msrc[0m  typescript
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ cd src
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ emacs App.js
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ docker container stop node [Kcwonm nodecwnm
+nodecwonm
+nodecwnm
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ docker container rm[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kemacs docker [K-compose.yml
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ ls
+App.css  App.js  App.js~  App.test.js  docker-compose.yml  index.css  index.js  [0m[01;35mlogo.svg[0m
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ docker-cim[K[Kompose up
+
+Command 'docker-compose' not found, but can be installed with:
+
+sudo snap install docker          # version 18.09.9, or
+sudo apt  install docker-compose
+
+See 'snap info docker' for additional versions.
+
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ docker --version
+Docker version 19.03.8, build afacb8b7f0
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ emacs Dockerfile
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ docker build .
+Sending build context to Docker daemon   12.8kB
+Error response from daemon: Dockerfile parse error line 2: unknown instruction: WORDIR
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ emacs Dockerfile 
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ docker build .
+Sending build context to Docker daemon  13.82kB
+Step 1/8 : FROM node:alpine as builder
+ ---> 72eea7c426fc
+Step 2/8 : WORKDIR '/app'
+ ---> Using cache
+ ---> 252f210f3085
+Step 3/8 : COPY package.json .
+COPY failed: stat /var/lib/docker/tmp/docker-builder434388730/package.json: no such file or directory
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+<none>              <none>              e652d15f21c6        48 minutes ago      333MB
+node                alpine              72eea7c426fc        13 days ago         117MB
+redis               latest              987b78fc9e38        2 weeks ago         104MB
+busybox             latest              78096d0a5478        2 weeks ago         1.22MB
+my-custom-node      latest              e0e6af798a01        3 weeks ago         940MB
+my-custom-nginx     latest              1bde176db0c5        3 weeks ago         129MB
+mysql               latest              a7a67c95e831        5 weeks ago         541MB
+jenkins/jenkins     latest              127b486c7026        5 weeks ago         648MB
+mongo               latest              3f3daf863757        5 weeks ago         388MB
+alpine              latest              f70734b6a266        5 weeks ago         5.61MB
+php                 apache              411f1fb43be0        5 weeks ago         414MB
+nginx               latest              602e111c06b6        5 weeks ago         127MB
+hello-world         latest              bf756fb1ae65        5 months ago        13.3kB
+node                10.15.1             8fc2110c6978        16 months ago       897MB
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ ls var[K[K[K[K /var/lib/docker/tmp
+ls: cannot open directory '/var/lib/docker/tmp': Permission denied
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ sudo ls /var/lib/docker/tmp/
+[sudo] password for itsbalu: 
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ sudo ls /var/lib/docker/tmp/[K[K[K[K
+builder  buildkit  containers  image  network  overlay2  plugins  runtimes  swarm  tmp	trust  volumes
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ ls
+App.css  App.js  App.js~  App.test.js  docker-compose.yml  Dockerfile  Dockerfile~  index.css  index.js  [0m[01;35mlogo.svg[0m
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ rm Dockerfile~
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ ls
+App.css  App.js  App.js~  App.test.js  docker-compose.yml  Dockerfile  index.css  index.js  [0m[01;35mlogo.svg[0m
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ cat Dockerfile 
+FROM node:alpine as builder
+WORKDIR '/app'
+COPY package.json .
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM nginx
+COPY --from=builder /app/build /usr/share/nginx/html]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ 
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+<none>              <none>              e652d15f21c6        11 hours ago        333MB
+node                alpine              72eea7c426fc        13 days ago         117MB
+redis               latest              987b78fc9e38        2 weeks ago         104MB
+busybox             latest              78096d0a5478        2 weeks ago         1.22MB
+my-custom-node      latest              e0e6af798a01        3 weeks ago         940MB
+my-custom-nginx     latest              1bde176db0c5        4 weeks ago         129MB
+mysql               latest              a7a67c95e831        5 weeks ago         541MB
+jenkins/jenkins     latest              127b486c7026        5 weeks ago         648MB
+mongo               latest              3f3daf863757        5 weeks ago         388MB
+alpine              latest              f70734b6a266        5 weeks ago         5.61MB
+php                 apache              411f1fb43be0        5 weeks ago         414MB
+nginx               latest              602e111c06b6        5 weeks ago         127MB
+hello-world         latest              bf756fb1ae65        5 months ago        13.3kB
+node                10.15.1             8fc2110c6978        16 months ago       897MB
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ docker-comp[K[K[K[K[K build [K[K[K[K[K[K[K[K[K[K[K[K[Kcd ..
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ ls
+[0m[01;34mbuild[0m  Dockerfile.dev  [01;34mhelp[0m  [01;34mnode_modules[0m  package.json  [01;34mpublic[0m  README.md  [01;34msrc[0m  typescript
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ cd src
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ ls
+App.css  App.js  App.js~  App.test.js  docker-compose.yml  Dockerfile  index.css  index.js  [0m[01;35mlogo.svg[0m
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ mv Dockerfile ../[K[K[K~/frontend
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend/src[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend/src[00m$ ls[K[Kcd ..
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ ls
+[0m[01;34mbuild[0m  Dockerfile  Dockerfile.dev  [01;34mhelp[0m  [01;34mnode_modules[0m  package.json  [01;34mpublic[0m  README.md  [01;34msrc[0m  typescript
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ mv ~/frontend/src/docker-compose.yml ~/frontend
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ ls
+[0m[01;34mbuild[0m  docker-compose.yml  Dockerfile  Dockerfile.dev  [01;34mhelp[0m  [01;34mnode_modules[0m  package.json  [01;34mpublic[0m  README.md  [01;34msrc[0m  typescript
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker build .
+Sending build context to Docker daemon  557.1kBSending build context to Docker daemon  941.6kB
+Step 1/8 : FROM node:alpine as builder
+ ---> 72eea7c426fc
+Step 2/8 : WORKDIR '/app'
+ ---> Using cache
+ ---> 252f210f3085
+Step 3/8 : COPY package.json .
+ ---> Using cache
+ ---> a334d40ec238
+Step 4/8 : RUN npm install
+ ---> Using cache
+ ---> a462fa2b1352
+Step 5/8 : COPY . .
+ ---> 746f07d9a790
+Step 6/8 : RUN npm run build
+ ---> Running in dae62174737f
+
+> frontend@0.1.0 build /app
+> react-scripts build
+
+Creating an optimized production build...
+[91m(node:23) Warning: Accessing non-existent property 'cat' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+[0m[91m(node:23) Warning: Accessing non-existent property 'cd' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'chmod' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'cp' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'dirs' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'pushd' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'popd' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'echo' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'tempdir' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'pwd' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'exec' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'ls' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'find' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'grep' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'head' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'ln' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'mkdir' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'rm' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'mv' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'sed' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'set' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'sort' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'tail' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'test' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'to' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'toEnd' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'touch' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'uniq' of module exports inside circular dependency
+[0m[91m(node:23) Warning: Accessing non-existent property 'which' of module exports inside circular dependency
+[0mCompiled successfully.
+
+File sizes after gzip:
+
+  44.59 KB (+3 B)  build/static/js/main.c57e5fcf.js
+  264 B            build/static/css/main.40b4a62f.css
+
+The project was built assuming it is hosted at the server root.
+To override this, specify the homepage in your package.json.
+For example, add this to build it for GitHub Pages:
+
+  "homepage": "http://myname.github.io/myapp",
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Removing intermediate container dae62174737f
+ ---> 1cfff46ea689
+Step 7/8 : FROM nginx
+ ---> 602e111c06b6
+Step 8/8 : COPY --from=builder /app/build /usr/share/nginx/html
+ ---> 9e4671f8fee7
+Successfully built 9e4671f8fee7
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+<none>              <none>              9e4671f8fee7        12 seconds ago      127MB
+<none>              <none>              1cfff46ea689        14 seconds ago      248MB
+<none>              <none>              e652d15f21c6        11 hours ago        333MB
+node                alpine              72eea7c426fc        13 days ago         117MB
+redis               latest              987b78fc9e38        2 weeks ago         104MB
+busybox             latest              78096d0a5478        2 weeks ago         1.22MB
+my-custom-node      latest              e0e6af798a01        3 weeks ago         940MB
+my-custom-nginx     latest              1bde176db0c5        4 weeks ago         129MB
+mysql               latest              a7a67c95e831        5 weeks ago         541MB
+jenkins/jenkins     latest              127b486c7026        5 weeks ago         648MB
+mongo               latest              3f3daf863757        5 weeks ago         388MB
+alpine              latest              f70734b6a266        5 weeks ago         5.61MB
+php                 apache              411f1fb43be0        5 weeks ago         414MB
+nginx               latest              602e111c06b6        5 weeks ago         127MB
+hello-world         latest              bf756fb1ae65        5 months ago        13.3kB
+node                10.15.1             8fc2110c6978        16 months ago       897MB
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container run -p 8080:80 --name ndenginx [1@o[C[C[C[C[C[C[C[C[Kc -d 9e4671f8fee7
+a46847582575ec992fa5dd491ef028fbb650ee6f75c7aeb321ce875134d64eef
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker cont[K[K[K[K[K container ls
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+a46847582575        9e4671f8fee7        "nginx -g 'daemon of…"   15 seconds ago      Up 10 seconds       0.0.0.0:8080->80/tcp   nodenginxc
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container exec -it nodenginxc sh
+# ls /usr/share/nginx/html
+50x.html  asset-manifest.json  favicon.ico  index.html	static
+# cat index.html
+cat: index.html: No such file or directory
+# cd /usr/sh hare/nginx/html
+# cat indi ex.html
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="shortcut icon" href="/favicon.ico"><title>React App</title><link href="/static/css/main.40b4a62f.css" rel="stylesheet"></head><body><div id="root"></div><script type="text/javascript" src="/static/js/main.c57e5fcf.js"></script></body></html># exit
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container stop .
+Error response from daemon: page not found
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container stop nodenginxc 
+nodenginxc
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ docker container ps --all
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
+a46847582575        9e4671f8fee7        "nginx -g 'daemon of…"   4 minutes ago       Exited (0) 14 seconds ago                       nodenginxc
+939156180ef5        e652d15f21c6        "docker-entrypoint.s…"   11 hours ago        Exited (0) 11 hours ago                         nodecwonm
+4b75e94c5326        e652d15f21c6        "docker-entrypoint.s…"   11 hours ago        Exited (0) 11 hours ago                         nodecwnm
+9f5cb1c3a420        php:apache          "docker-php-entrypoi…"   4 weeks ago         Exited (0) 2 weeks ago                          myPHP
+55c7b4f716bc        mysql               "docker-entrypoint.s…"   4 weeks ago         Exited (0) 2 weeks ago                          myMySQL
+311787be85a5        mongo               "docker-entrypoint.s…"   4 weeks ago         Exited (0) 4 weeks ago                          myMongocv
+c026c992c631        mongo               "docker-entrypoint.s…"   4 weeks ago         Exited (0) 4 weeks ago                          myMongodet
+8bddb2b1947c        nginx               "nginx -g 'daemon of…"   4 weeks ago         Exited (0) 8 days ago                           myNginxv
+]0;itsbalu@ThinkPad-Ubuntu: ~/frontend[01;32mitsbalu@ThinkPad-Ubuntu[00m:[01;34m~/frontend[00m$ exit
+exit
+
+Script done on 2020-06-03 11:47:47+0530
